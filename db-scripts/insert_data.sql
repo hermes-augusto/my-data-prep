@@ -1,99 +1,90 @@
+-- =========================
+-- USUARIOS
+-- =========================
 INSERT INTO usuarios.contas VALUES
-('11111111111','Ana Silva','ana@email.com','2024-01-10','2024-02-10'),
-('22222222222','Carlos Souza','carlos@email.com','2024-01-15','2024-02-15'),
-('33333333333','Mariana Lima','mariana@email.com','2024-01-20','2024-02-20');
+('11111111111','Joao Silva','joao@email.com',NOW(),NULL),
+('22222222222','Maria Souza','maria@email.com',NOW(),NULL),
+('33333333333','Pedro Lima','pedro@email.com',NOW(),NULL);
 
-INSERT INTO usuarios.perfil (nome_perfil,avatar,idioma,classificacao_max,infantil,id_conta)
-VALUES
-('Ana','avatar1.png','PT','18',false,'11111111111'),
-('Pedro','avatar2.png','PT','10',true,'11111111111'),
-('Carlos','avatar3.png','EN','18',false,'22222222222'),
-('Julia','avatar4.png','PT','12',false,'33333333333');
+INSERT INTO usuarios.perfil (id_conta,nome_perfil,classificacao) VALUES
+('11111111111','Joao',18),
+('11111111111','Kids',10),
+('22222222222','Maria',18),
+('33333333333','Pedro',18);
 
-
-INSERT INTO financeiro.planos (nome_plano,preco_mensal,resolucao_max)
-VALUES
-('Basic',19.90,'HD'),
-('Standard',29.90,'FullHD'),
+-- =========================
+-- FINANCEIRO
+-- =========================
+INSERT INTO financeiro.planos (nome_plano,preco_mensal,resolucao_max) VALUES
+('Basico',19.90,'HD'),
+('Padrao',29.90,'Full HD'),
 ('Premium',49.90,'4K');
 
+INSERT INTO financeiro.pagamento (dt_pagamento,valor,cpf) VALUES
+('2024-01-01',29.90,'11111111111'),
+('2024-01-01',49.90,'22222222222'),
+('2024-01-01',19.90,'33333333333');
 
-INSERT INTO usuarios.historico_plano (dt_inicio,dt_fim,id_plano,id_conta)
-VALUES
-('2024-01-10',NULL,2,'11111111111'),
-('2024-01-15',NULL,1,'22222222222'),
-('2024-01-20',NULL,3,'33333333333');
+INSERT INTO financeiro.historico_plano (dt_inicio,id_plano,cpf) VALUES
+('2024-01-01',2,'11111111111'),
+('2024-01-01',3,'22222222222'),
+('2024-01-01',1,'33333333333');
 
-INSERT INTO financeiro.pagamento (dt_pagamento,valor,data_criacao,id_conta)
-VALUES
-('2024-02-10',29.90,'2024-02-10','11111111111'),
-('2024-02-15',19.90,'2024-02-15','22222222222'),
-('2024-02-20',49.90,'2024-02-20','33333333333');
+-- =========================
+-- CATALOGO
+-- =========================
+INSERT INTO catalogo.conteudo (titulo,tipo,classificacao,genero,ano_lancamento,duracao) VALUES
+('Matrix','filme',16,'acao',1999,120),
+('Matrix Reloaded','filme',16,'acao',2003,130),
+('Breaking Bad','serie',18,'drama',2008,NULL),
+('Stranger Things','serie',16,'ficcao',2016,NULL),
+('Dark','serie',18,'ficcao',2017,NULL);
 
-INSERT INTO catalogo.conteudo (titulo,resumo,tipo,classificacao)
-VALUES
-('Matrix','Sci-fi clássico','FILME','16'),
-('Toy Story','Animação','FILME','L'),
-('Breaking Bad','Drama','SERIE','18'),
-('Stranger Things','Sci-fi','SERIE','14'),
-('Interestelar','Espaço','FILME','10');
-
-INSERT INTO catalogo.franquia (nome_franquia,sequencia)
-VALUES
+INSERT INTO catalogo.franquia (nome_franquia,sequencia) VALUES
 ('Matrix',1),
-('Toy Story',1);
+('Matrix',2);
 
-INSERT INTO catalogo.filme VALUES
-(1,1,'Primeiro Matrix'),
-(2,2,'Toy Story original'),
-(5,NULL,'Filme espacial');
-
-INSERT INTO catalogo.series (titulo_serie,detalhes)
-VALUES
-('Breaking Bad','Química e crime'),
-('Stranger Things','Mistério anos 80');
-
-INSERT INTO catalogo.temporada (nro_temp,id_serie)
-VALUES
+INSERT INTO catalogo.filmes (id_franquia,id_conteudo) VALUES
 (1,1),
-(1,2);
+(2,2);
 
-INSERT INTO catalogo.episodio (nro_ep,id_temporada,id_conteudo)
-VALUES
+INSERT INTO catalogo.series (titulo_serie,classificacao_serie) VALUES
+('Breaking Bad',18),
+('Stranger Things',16),
+('Dark',18);
+
+INSERT INTO catalogo.temporada (nro_temp,id_serie) VALUES
+(1,1),(2,1),
+(1,2),(2,2),
+(1,3);
+
+INSERT INTO catalogo.episodio (nro_ep,id_temporada,id_conteudo) VALUES
 (1,1,3),
-(1,2,4);
+(2,1,3),
+(1,2,3),
+(1,3,4),
+(1,5,5);
 
-INSERT INTO metadata.pessoa (nome,biografia)
-VALUES
-('Keanu Reeves','Ator canadense'),
-('Bryan Cranston','Ator americano'),
-('Tom Hanks','Ator famoso');
+-- =========================
+-- METADATA
+-- =========================
+INSERT INTO metadata.idioma (nome) VALUES
+('Português'),('Inglês'),('Espanhol');
 
+INSERT INTO metadata.conteudo_idioma VALUES
+(1,1,'Dublado'),
+(1,2,'Original'),
+(2,1,'Dublado'),
+(3,2,'Original'),
+(4,1,'Dublado');
 
-INSERT INTO metadata.participacao (papel,personagem,id_pessoa,id_conteudo)
-VALUES
-('ATOR','Neo',1,1),
-('ATOR','Walter White',2,3),
-('ATOR','Woody',3,2);
-
-INSERT INTO metadata.idioma (nome)
-VALUES
-('Português'),
-('Inglês'),
-('Espanhol');
-
-INSERT INTO metadata.conteudo_idioma
-VALUES
-(1,1,'audio'),
-(1,2,'audio'),
-(1,1,'legenda'),
-(2,1,'audio'),
-(3,2,'audio');
-
+-- =========================
+-- STREAMING
+-- =========================
 INSERT INTO streaming.historico_visualizacao
-(dt_inicio,progresso,concluido,id_perfil,id_conteudo)
-VALUES
-('2024-02-01',120,true,1,1),
-('2024-02-02',45,false,2,2),
-('2024-02-03',60,false,3,3),
-('2024-02-04',30,false,4,4);
+(dt_inicio,progresso,concluido,id_perfil,id_conteudo) VALUES
+(NOW(),100,true,1,1),
+(NOW(),50,false,1,2),
+(NOW(),100,true,2,4),
+(NOW(),80,false,3,3),
+(NOW(),100,true,4,5);
