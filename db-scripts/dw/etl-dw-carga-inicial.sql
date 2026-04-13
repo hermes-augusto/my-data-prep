@@ -160,13 +160,13 @@ JOIN financeiro.historico_plano hp
  AND hv.dt_inicio >= hp.dt_inicio
  AND (hp.dt_fim IS NULL OR hv.dt_inicio <= hp.dt_fim)
 
--- DIM_PLANO (SCD2 🔥)
+-- DIM_PLANO SCD2
 JOIN dw.dim_plano dpl 
   ON dpl.id_plano = hp.id_plano
  AND hv.dt_inicio >= dpl.data_inicio
  AND (dpl.data_fim IS NULL OR hv.dt_inicio <= dpl.data_fim)
 
--- 🚫 IDEMPOTÊNCIA
+
 WHERE NOT EXISTS (
     SELECT 1
     FROM dw.fato_visualizacao f

@@ -103,3 +103,12 @@ JOIN dw.dim_data dd
     ON dd.sk_data = f.sk_data
 GROUP BY dd.dia_semana
 ORDER BY total_views DESC;
+
+-- retenção (engajamento alto)
+SELECT 
+    dc.titulo,
+    AVG(f.percentual) AS engajamento
+FROM dw.fato_visualizacao f
+JOIN dw.dim_conteudo dc ON dc.sk_conteudo = f.sk_conteudo
+GROUP BY dc.titulo
+ORDER BY engajamento DESC;
