@@ -1,5 +1,9 @@
 # Data Warehouse - Streaming Case
-
+## Grupo
+* Hermes Barboza - 10734216
+* Lucio Cruz - 10738632
+* Nathalia Malafatti - 10732990
+* Vitor Paes - 10734138
 ## Descrição
 
 Projeto de modelagem de dados com:
